@@ -10,6 +10,7 @@ const [allDevicesList] = createResource(fetchDeviceList);
 const [firmwareUpdateableDevices] = createResource(fetchFirmwareUpdateableDevices);
 
 const [showOnlyFirmwareUpdateable, setShowOnlyFirmwareUpdateable] = createSignal(true);
+const [minDevCount, setMinDevCount] = createSignal(2);
 
 const App: Component = () => {
   return (
@@ -19,6 +20,8 @@ const App: Component = () => {
         <FilterForm 
           showOnlyFirmwareUpdateable={showOnlyFirmwareUpdateable()} 
           setOnlyFirmwareUpdateableFlag={setShowOnlyFirmwareUpdateable}
+          minDevCount={minDevCount()}
+          setMinDevCount={setMinDevCount}
         />
       </header>
       <main>
@@ -26,7 +29,10 @@ const App: Component = () => {
           when={!allDevicesList.loading && !firmwareUpdateableDevices.loading} 
           fallback={<div>Loading data...</div>}
         >
-          <ResultList deviceList={showOnlyFirmwareUpdateable() ? firmwareUpdateableDevices : allDevicesList} />
+          <ResultList 
+            deviceList={showOnlyFirmwareUpdateable() ? firmwareUpdateableDevices : allDevicesList} 
+            minDevCount={minDevCount()}
+          />
         </Show>
       </main>
     </div>

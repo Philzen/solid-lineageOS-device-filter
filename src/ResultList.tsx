@@ -4,6 +4,7 @@ import LineageDeviceInfo from "./types/LineageDeviceInfo";
 
 interface ResultListProps {
   deviceList: Resource<string[]>
+  minDevCount: number
 }
 
 export default function ResultList(props: ResultListProps): JSXElement {
@@ -16,17 +17,23 @@ export default function ResultList(props: ResultListProps): JSXElement {
     <For each={props.deviceList()}>
       {(device: string) => {
         deviceData[device] = createResource(device, fetchDeviceData)[0]
-        return (<li>
-          <Show
-            when={!deviceData[device].loading}
-            fallback={<span>{device} &ndash; Loading data...</span>}>
-            <a href={`https://wiki.lineageos.org/devices/${device}/`}>
-              <span>{deviceData[device]()?.vendor} {deviceData[device]()?.name}</span> <strong>[{device}]</strong>
-            </a>
-          &nbsp;&ndash; <span>{deviceData[device]()?.maintainers.length} Devs</span>
+        return (
+          <Show when={
+            deviceData[device].loading || (deviceData[device]()?.maintainers.length || 0) >= props.minDevCount
+          }>
+            <li>
+              <Show
+                when={!deviceData[device].loading}
+                fallback={<span>{device} &ndash; Loading data...</span>}>
+                <a href={`https://wiki.lineageos.org/devices/${device}/`}>
+                  <span>{deviceData[device]()?.vendor} {deviceData[device]()?.name}</span> <strong>[{device}]</strong>
+                </a>
+              &nbsp;&ndash; <span>{deviceData[device]()?.maintainers.length} Devs</span>
+              </Show>
+            </li>
           </Show>
-        </li>
-      )}}
+        )
+      }}
     </For>
   </ul> 
 }
