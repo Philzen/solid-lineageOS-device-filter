@@ -1,34 +1,27 @@
-## Usage
+# Solid JS Lineage OS Device selection helper
 
-Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
+This is a small pet project i hacked b/c (a) i was looking for a new phone that is both well maintained by the LineageOS team *and* still offers a firmware update process once LineageOS is installed and (b) i was keen to give [Solid JS](https://www.solidjs.com/) – the [supposedly fastest javascript framework](https://javascript.plainenglish.io/javascript-frameworks-performance-comparison-2020-cd881ac21fce) – a little test drive.
 
-This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
+Currently it only does fulfill exactly my both (a) requirements, but it could potentially be expanded to provide flexible and complete tabular comparison of all devices in the LineageOS wiki.
 
-```bash
-$ npm install # or pnpm install or yarn install
-```
+Potential TODOs / future features (knock yourself out):
+- centralise repository name and URLs in a config
+- use a YAML library to parse device data in `fetch/deviceData.ts`
+- Caching (i.e. local storage) and on-demand update fetches
+- Bundled requests or download and extraction of complete repo as ZIP instead of multiple, individual requests
+- display data as table
+- more filters, i.e. auto-filter & sortable DataTables
+- dynamic selection of features to be display in the device list
+- …
 
-### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
+## Development
 
-## Available Scripts
+1. Clone repo.
+2. `pnpm install` (npm: `npm install`)
+3. `pnpm dev` (npm: `npm run dev`)
 
-In the project directory, you can run:
+## Generate Production Build
 
-### `npm dev` or `npm start`
+`pnpm build` (npm: `npm run build`)
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br>
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.<br>
-It correctly bundles Solid in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-## Deployment
-
-You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
+You can then deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)
