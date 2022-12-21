@@ -1,6 +1,16 @@
-import { JSXElement } from "solid-js";
+import { JSX, JSXElement, Setter } from "solid-js";
 
-export default function FilterForm(): JSXElement {
+interface FilterFormProps {
+  showOnlyFirmwareUpdateable: boolean
+  setOnlyFirmwareUpdateableFlag: Setter<boolean>
+}
+
+export default function FilterForm(props: FilterFormProps): JSXElement {
+  
+  const setFirmwareUpdateableFlag: JSX.EventHandler<HTMLInputElement, Event> = (event) => {
+    props.setOnlyFirmwareUpdateableFlag(event.currentTarget.checked)
+  };
+  
   return <form>
     <fieldset class="filter-form">
       <legend>Filter Options</legend>
@@ -10,7 +20,12 @@ export default function FilterForm(): JSXElement {
       </div>
       <div>
         <label for="updateableFirmwareFlag">Firmware is updateable</label>
-        <input id="updateableFirmwareFlag" type="checkbox" checked={true} />
+        <input 
+          id="updateableFirmwareFlag" 
+          type="checkbox" 
+          checked={props.showOnlyFirmwareUpdateable} 
+          onChange={setFirmwareUpdateableFlag}
+        />
       </div>
     </fieldset>
   </form>

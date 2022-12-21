@@ -1,7 +1,20 @@
-import { JSXElement } from "solid-js";
+import { For, JSXElement, Resource } from "solid-js";
 
-export default function ResultList(): JSXElement {
+interface ResultListProps {
+  deviceList: Resource<string[]>
+}
+
+export default function ResultList(props: ResultListProps): JSXElement {
   return <ul>
-    <li><a href=""><span>Market Name</span> <span>(Codename)</span></a> | <span>N Devs</span></li>
+    <For each={props.deviceList()}>
+      {(device: string) => (
+        <li>
+          <a href={`https://wiki.lineageos.org/devices/${device}/`}>
+            <span>Market Name</span> <span>({device})</span>
+          </a>
+          &nbsp;| <span>N Devs</span>
+        </li>
+      )}
+    </For>
   </ul> 
 }
