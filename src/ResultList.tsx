@@ -7,6 +7,7 @@ interface ResultListProps {
   minDevCount: number
 }
 
+
 export default function ResultList(props: ResultListProps): JSXElement {
   
   if (props.deviceList() === undefined) return
@@ -16,7 +17,9 @@ export default function ResultList(props: ResultListProps): JSXElement {
   return <ul>
     <For each={props.deviceList()}>
       {(device: string) => {
-        deviceData[device] = createResource(device, fetchDeviceData)[0]
+        if (deviceData[device] === undefined) {
+          deviceData[device] = createResource(device, fetchDeviceData)[0]
+        }
         return (
           <Show when={
             deviceData[device].loading || (deviceData[device]()?.maintainers.length || 0) >= props.minDevCount
